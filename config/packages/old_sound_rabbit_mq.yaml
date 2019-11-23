@@ -1,0 +1,18 @@
+old_sound_rabbit_mq:
+  connections:
+    default:
+      host: '%rabbitmq_host%'
+      user: '%rabbitmq_user%'
+      password: '%rabbitmq_password%'
+  producers:
+    emailing:
+      connection: default
+      exchange_options:
+        name: emails
+        type: direct
+  consumers:
+    emailing:
+      connection:       default
+      exchange_options: {name: 'emails', type: direct}
+      queue_options:    {name: 'emails'}
+      callback:         app.consumer.mail_sender
